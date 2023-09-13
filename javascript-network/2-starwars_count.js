@@ -20,10 +20,16 @@ request(apiUrl, (error, response, body) => {
   }
 
   // Parse the JSON response
-  const films = JSON.parse(body);
+  const data = JSON.parse(body);
+
+  // Check if the API response includes 'results' and it is an array
+  if (!Array.isArray(data.results)) {
+    console.error('Invalid API response');
+    process.exit(1);
+  }
 
   // Filter the films where "Wedge Antilles" appears
-  const filmsWithWedgeAntilles = films.results.filter((film) =>
+  const filmsWithWedgeAntilles = data.results.filter((film) =>
     film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)
   );
 
