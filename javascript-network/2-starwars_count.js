@@ -1,12 +1,9 @@
 const request = require('request');
 
-// URL to the Star Wars API films endpoint
 const apiUrl = process.argv[2];
 
-// Character ID for "Wedge Antilles"
 const characterId = 18;
 
-// Function to fetch the movies and count appearances of "Wedge Antilles"
 function countMoviesWithCharacter(apiUrl, characterId) {
   request(apiUrl, (error, response, body) => {
     if (error) {
@@ -32,10 +29,9 @@ function countMoviesWithCharacter(apiUrl, characterId) {
   });
 }
 
-// Check if the API URL is provided as a command-line argument
 if (!apiUrl) {
   console.error('Please provide the API URL as the first argument.');
 } else {
-  // Call the function to count movies with "Wedge Antilles"
+  
   countMoviesWithCharacter(apiUrl, characterId);
 }
