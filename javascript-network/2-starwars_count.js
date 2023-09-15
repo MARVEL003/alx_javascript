@@ -1,7 +1,7 @@
 const request = require('request');
 
 // URL to the Star Wars API films endpoint
-const apiUrl = process.argv[2]; // The API URL is passed as a command-line argument
+const apiUrl = process.argv[2];
 
 // Character ID for "Wedge Antilles"
 const characterId = 18;
