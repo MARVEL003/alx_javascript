@@ -1,38 +1,41 @@
 const request = require('request');
 
-// Check if the API URL is provided as a command-line argument
-if (process.argv.length !== 3) {
-  console.error('Usage: node 2-starwars_count.js <API URL>');
-  process.exit(1);
-}
+// URL to the Star Wars API films endpoint
+const apiUrl = process.argv[2]; // The API URL is passed as a command-line argument
 
-// Get the API URL from the command-line argument
-const apiUrl = process.argv[2];
-
-// Define the character ID for "Wedge Antilles"
+// Character ID for "Wedge Antilles"
 const characterId = 18;
 
-// Make a GET request to the API
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error.message);
-    process.exit(1);
-  }
+// Function to fetch the movies and count appearances of "Wedge Antilles"
+function countMoviesWithCharacter(apiUrl, characterId) {
+  request(apiUrl, (error, response, body) => {
+    if (error) {
+      console.error('Error:', error);
+      return;
+    }
 
-  // Parse the JSON response
-  const data = JSON.parse(body);
+    if (response.statusCode !== 200) {
+      console.error('Request failed with status code:', response.statusCode);
+      return;
+    }
 
-  // Check if the API response includes 'results' and it is an array
-  if (!Array.isArray(data.results)) {
-    console.error('Invalid API response');
-    process.exit(1);
-  }
+    const films = JSON.parse(body).results;
+    let count = 0;
 
-  // Filter the films where "Wedge Antilles" appears
-  const filmsWithWedgeAntilles = data.results.filter((film) =>
-    film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)
-  );
+    films.forEach((film) => {
+      if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
+        count++;
+      }
+    });
 
-  // Print the number of films where "Wedge Antilles" is present
-  console.log(filmsWithWedgeAntilles.length);
-});
+    console.log(count);
+  });
+}
+
+// Check if the API URL is provided as a command-line argument
+if (!apiUrl) {
+  console.error('Please provide the API URL as the first argument.');
+} else {
+  // Call the function to count movies with "Wedge Antilles"
+  countMoviesWithCharacter(apiUrl, characterId);
+}
