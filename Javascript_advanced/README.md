@@ -1,0 +1,1 @@
+This is a continuation of my javascript projects.New Methods and terminologies will be looked into.
