@@ -9,8 +9,8 @@
   </head>
   <body>
     <h1>Login to the website</h1>
-    <input type="text" placeholder="firstname" id="firstname" />
-    <input type="text" placeholder="email" id="email" />
+    <input type="text" placeholder="Firstname" id="firstname" />
+    <input type="text" placeholder="Email" id="email" />
     <button onclick="setCookies()">Log me in</button>
 
     <h1>Cookies</h1>
@@ -18,13 +18,19 @@
 
     <!-- in the js script, the functions made the work on html page more dynamic and realistic -->
     <!-- trim(), this removes white characteristic -->
+    <!-- making th cookie expire in 10 days at date in setCookies() -->
+    <!-- added a nre function getCookies() that accepts specific name argument -->
     <script>
       function setCookies() {
         let firstname = document.getElementById("firstname").value;
         let email = document.getElementById("email").value;
 
-        document.cookie = "firstname=" + firstname;
-        document.cookie = "email=" + email;
+        let date = new Date();
+        date.setTime(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days
+        let expires = "expires=" + date.toUTCString();
+
+        document.cookie = "firstname=" + firstname + ";" + expires;
+        document.cookie = "email=" + email + ";" + expires;
       }
 
       function showCookies() {
@@ -43,6 +49,19 @@
         }
 
         document.body.appendChild(p);
+      }
+
+      function getCookie(name) {
+        let cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length + 1);
+          }
+        }
+
+        return "";
       }
     </script>
   </body>

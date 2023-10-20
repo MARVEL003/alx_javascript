@@ -18,13 +18,18 @@
 
     <!-- in the js script, the functions made the work on html page more dynamic and realistic -->
     <!-- trim(), this removes white characteristic -->
+    <!-- making th cookie expire in 10 days at date in setCookies() -->
     <script>
       function setCookies() {
         let firstname = document.getElementById("firstname").value;
         let email = document.getElementById("email").value;
 
-        document.cookie = "firstname=" + firstname;
-        document.cookie = "email=" + email;
+        let date = new Date();
+        date.setTime(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days
+        let expires = "expires=" + date.toUTCString();
+
+        document.cookie = "firstname=" + firstname + ";" + expires;
+        document.cookie = "email=" + email + ";" + expires;
       }
 
       function showCookies() {
