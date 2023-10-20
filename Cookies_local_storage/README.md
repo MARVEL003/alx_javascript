@@ -1,0 +1,1 @@
+In this project,I am working on how to integrate cookies to HTML using JavaScript.
